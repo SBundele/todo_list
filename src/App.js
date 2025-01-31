@@ -1,5 +1,8 @@
 import { useState } from "react";
+import ToDoForm from "./components/ToDoForm";
+import ToDoList from "./components/ToDoList";
 import "./App.css";
+
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -16,7 +19,6 @@ function App() {
       const updatedTodos = todos.map((t) =>
         t.id === editTodo.id ? { id: t.id, todo: todo } : t
       );
-      console.log(updatedTodos)
       setTodos(updatedTodos);
       setEditId(0);
     }
@@ -38,29 +40,8 @@ function App() {
     <div className="App">
       <div className="container">
         <h1>ToDo List</h1>
-        <form className="todoForm" action="" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Add a task"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-          />
-          <button type="submit">
-            {editId === 0 ? "Add ToDo" : "Update Todo"}
-          </button>
-        </form>
-
-        <ul className="allTodos">
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              <span>{todo.todo}</span>
-              <div>
-                <button onClick={() => handleEdit(todo.id)}>Edit</button>
-                <button onClick={() => handleDelete(todo.id)}>Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ToDoForm handleSubmit={handleSubmit} todo={todo} setTodo={setTodo} editId={editId} />
+        <ToDoList todos={todos} handleEdit={handleEdit} handleDelete={handleDelete} />
       </div>
     </div>
   );
